@@ -1,287 +1,251 @@
-/* 基本页面样式 */
-body {  
-  font-family: '汉仪长仿宋体', '汉仪瘦金书简', Roboto, PingFang, simsun; /* 设置网页的默认字体 */
-  margin: 0;  /* 清除默认外边距 */
-  background-color: rgb(255, 255, 255); /* 设置网页的背景颜色为白色 */
-  display: flex;
-  justify-content: center; /* 让子元素（水平方向）在页面中心对齐 */
-  align-items: center;  /* 让子元素（垂直方向）在页面中心对齐 */
+:root {
+  --page-max: 860px;
+  --gap: 14px;
+  --radius: 10px;
+  --text: #ffffff;
 }
 
-/* 网页进入动画过渡 */
-#transition-container {
-  position: fixed;
-  top: 0;
-  left: 0;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: #ffffff;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  color: var(--text);
+  font-family: "Songti SC", "Noto Serif SC", "Microsoft YaHei", SimSun, serif;
+}
+
+.container {
+  width: min(100%, var(--page-max));
+  min-height: 100vh;
+  padding: clamp(12px, 3vw, 22px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  position: relative;
+  background: #4b3561 url("images/container-bg.jpg") center / cover no-repeat;
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(34px, 9vw, 72px);
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+}
+
+#postcard-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  width: 100%;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.form-group {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: clamp(15px, 3.8vw, 24px);
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.32);
+}
+
+.input-box {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+  color: #ffffff;
+  font: inherit;
+  font-size: clamp(15px, 3.8vw, 22px);
+  outline: none;
+}
+
+.input-box::placeholder {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.message {
+  height: auto;
+  min-height: 72px;
+  resize: vertical;
+  line-height: 1.35;
+}
+
+#canvasContainer,
+.canvas-container {
+  width: 100%;
+}
+
+.canvas-container {
+  position: relative;
+  aspect-ratio: 2400 / 3300;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #f4efe7 url("images/canvascontainer-bg.jpg") center / cover no-repeat;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  touch-action: pan-y;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: url('images/P_edge.webp') no-repeat center center;
-  background-size: cover;
-  z-index: 4;
-  transition: opacity 1s ease-out /* 淡出 */
 }
 
-/* CSS动态背景 */
-@keyframes gradientMove {
-0% { background-position: 0% 50%; } /* 背景起始位置 */
-50% { background-position: 100% 50%; } /* 背景在中间位置 */
-100% { background-position: 0% 50%; } /* 背景回到起始位置 */
+#imageCanvas {
+  z-index: 1;
 }
 
-/* 基本容器布局 */
-.container {  
-justify-content: center; /* 水平居中 */
-align-items: center; /* 垂直居中 */
-padding: 10px; 
-border-radius: 0px; /* 设置圆角，使容器边角更加平滑 */
-background-color: rgb(255, 255, 255); /* 设置容器的背景颜色为白色 */
-box-shadow: 0 2px 2px rgb(60, 60, 60); /* 添加阴影，使容器更有立体感 */
-margin: 0px;
-height: auto;
-width: 100%; /* 容器宽度占满父级容器 */
-max-width: 1080px; /* 设置最大宽度，防止容器过宽 */
-max-height: 2700px; /* 设置最大高度，防止容器过高 */
-box-sizing: border-box; /* 确保 padding 不影响宽度 */
-
-background: url('./images/container-bg.jpg') no-repeat center/cover; /* 添加背景图片： 
-   - no-repeat：防止图片重复铺满
-   - center：图片居中
-   - cover：让图片完全覆盖容器 */
-animation: gradientMove 7s ease infinite; /* 绑定动画：
-   - 动画名：gradientMove
-   - 持续时间：15s
-   - 过渡方式：ease（缓动效果）
-   - infinite：无限循环播放 */
-
-flex-direction: column; /* 让子元素垂直排列 */
-display: flex; /* 让子元素按 flex 布局排列 */
-position: relative;  /* 确保水印相对于.container定位 */
+#textCanvas {
+  z-index: 2;
 }
 
-/* 标题 */
-h1 {
-text-align: center;  /* 居中对齐标题 */
-font-size: 88px;
-color: rgb(255, 255, 255);  /* 白色文字 */
-font-family: '汉仪长仿宋体', simsun, Roboto, PingFang;  /* 字体设置 */
-margin: 0;  /* 去掉外边距 */
-padding-top: 10px;  /* 顶部间距25px */
-padding-bottom: 20px;  /* 底部间距25px */
-} 
-
-/* 元素统一布局 */
-.form-row {
-display: flex; /* 使用Flexbox布局 */
-gap: 25px; /* 设置输入框之间的间距 */
-width: 100%; /* 让行元素填满容器 */
-margin-bottom: 25px; /* 每行之间的间距 */
-}
-
-/* 输入框平分父容器宽度 */
-.form-group {
-flex: 1; /* 让输入框自适应等分宽度 */
-flex-direction: column; /* 让 label 和 input 竖直排列 */
-}
-
-/* 输入框 */
-.input-box {
-padding: 5px; /* 增加内边距 */
-background-color: rgba(255, 255, 255, 0); /* 透明白色背景 */
-border: 1px solid rgb(255, 255, 255); /* 轻微边框颜色 */
-box-shadow: 0 2px 2px rgb(0, 0, 0);  /* 轻微阴影 */
-font-size: 5vw; /* 字体大小 */
-color: white; /* 设置输入文字颜色为白色 */
-font-family: '汉仪长仿宋体', Roboto, PingFang, simsun; /* 设置字体 */
-width: 100%; /* 让输入框填充满父容器 */
-height: 40px;
-border-radius: 15px; /* 圆角边框 */
-box-sizing: border-box; /* 让 padding 不影响总宽度 */
-}
-
-/* 标签（通用） */
-label {
-font-size: 6vw; /* 字体大小 */
-color: rgb(255, 255, 255); /* 白色字体 */
-font-family: '汉仪长仿宋体', Roboto, PingFang, simsun; /* 设定字体 */
-display: inline-block; /* 保持块级元素 */
-margin-bottom: 5px; /* 下边距 */
-margin-top: -10px; /* 负上边距 */
-}
-
-/* 寄信人输入框 */
-.sender {
-max-width: 465px; /* 限制最大宽度 */
-height: 40px; /* 设置高度 */
-}
-
-/* 收信人输入框 */
-.receiver {
-max-width: 465px; /* 限制最大宽度 */
-height: 40px; /* 设置高度 */
-}
-
-/* 时间输入框 */
-.time {
-max-width: 465px; /* 限制最大宽度 */
-height: 40px; /* 设置高度 */
-}
-
-/* 邮政编码输入框 */
-.stampcode {
-max-width: 465px; /* 限制最大宽度 */
-height: 40px; /* 设置高度 */
-}
-
-/* 留言输入框 */
-.message {
-max-width: 465px; /* 限制最大宽度 */
-font-size: 5vw; /* 字体大小 */
-max-width: 100%;
-min-height: 60px;
-resize: vertical; /* 启用调整大小 */
-overflow-y: auto; /* 确保滚动可用 */
-padding-top: 8px; /* 增加内边距*/
-}
-
-/* 画布容器 */
-.canvas-container {
-margin: 0px;
-width: 100%; /* 让 canvas-container 充满 .container */
-height: auto;
-border-radius: 15px; /* 设置圆角，使容器边角更加平滑 */
-background-color: rgb(0, 0, 0); /* 黑色背景 */
-
-background: url('images/canvascontainer-bg.jpg') no-repeat center/cover; 
-background-position: center; /* 居中显示 */
-background-repeat: no-repeat; /* 不重复 */
-
-position: relative;  /* 作为父容器 */
-justify-content: center;
-    align-items: center;
-overflow: hidden; /* 防止 canvas 溢出 */
-}
-
-/* 让所有 canvas 层居中、叠加 */
-.layer {
-position: absolute;  /* 绝对定位，让其重叠 */
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%); /* 居中 */
-width: 100%; /* 与 canvas-container 一致 */
-height: 100%; /* 高度等同于容器 */
-}
-
-/* 涂鸦层（最上） */
 #drawingCanvas {
   z-index: 3;
-  background-color: rgba(0, 0, 0, 0); /* 初始时完全透明 */
-  transition: background-color 0.3s ease-in-out; /* 添加过渡动画 */
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;  /* 让它和 `canvas-container` 一样宽 */
-  height: 100%; /* 让它和 `canvas-container` 一样高 */
   cursor: crosshair;
-  touch-action: none; /* 允许触屏绘制 */
-} 
-/* 文字层（中间） */
-#textCanvas { 
-  z-index: 2; 
-  background-color: rgb(255, 0, 0, 0);
-}   
-/* 图片层（最下） */
-#imageCanvas { 
-  z-index: 1; 
-  background-color: rgb(0, 255, 4, 0);
-}  
+}
 
-/* 按钮容器*/
+#drawingCanvas.is-drawing {
+  background: rgba(255, 255, 255, 0.36);
+  touch-action: none;
+}
+
 .button-row {
-display: flex; /* 让按钮排成一行 */
-justify-content: space-between; /* 左右分布 */
-width: 100%;
-margin-top: 0px; /* 上方间距 */
-}
-
-/* 按钮样式 */
-.button-row button {
-  background-color: rgba(255, 255, 255, 0.25); /* 背景颜色 */  
-  color: rgb(255, 255, 255); /* 文字颜色 */
-  font-size: 6vw; /* 字体大小 */
-  font-family: '汉仪长仿宋体', Roboto, PingFang, simsun;
-  padding: 10px 10px;  /* 按钮内边距 */
-  border: none; /* 移除默认边框 */
-  border-radius: 15px; /* 圆角 */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 2px rgb(0, 0, 0); /* 添加阴影 */
-  cursor: pointer; /* 鼠标悬停样式 */
-}
-
-/* 左侧按钮组（插入邮票 + 开启涂鸦） */
-.left-button {
   display: flex;
-  flex: 1; /* 让“插入邮票”按钮占据左侧 */
-  max-width: 1000px; /* 限制最大宽度，避免过长 */
-  gap: 15px; /* 两个按钮之间的间距 */
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
 }
 
-/* 右侧按钮组（保存 & 分享） */ 
+.left-button,
 .right-buttons {
   display: flex;
-  gap: 15px; /* 让“保存”和“分享”有间距 */
+  gap: 10px;
+  min-width: 0;
 }
 
-/* 悬停时 */
-.button-row button:hover {
-  background-color: rgba(255, 255, 255, 0.15); /* 半透明白色背景 */;
-  transform: translateY(-1px); /* 悬停时微微上浮 */
+.left-button {
+  flex: 1 1 auto;
 }
 
-/* 点击时 */
-.button-row button:active {
-  background-color: rgba(255, 255, 255, 0.15); /* 半透明白色背景 */;
-  transform: translateY(1px); /* 按下时微微下沉 */
+.right-buttons {
+  flex: 0 0 auto;
 }
 
-/* 隐藏 input[type="file"] */
+.button-row button {
+  min-height: 42px;
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.28);
+  color: #ffffff;
+  font: inherit;
+  font-size: clamp(15px, 3.8vw, 22px);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button-row button:disabled {
+  opacity: 0.58;
+  cursor: wait;
+}
+
 .hidden-input {
   display: none;
 }
 
-/* 水印样式 */
 .watermark {
-position: absolute;
-bottom: 10px;  /* 固定距离底部0px */
-left: 50%;     /* 水平居中 */
-transform: translateX(-50%); /* 精确居中 */
-font-size: 10px; /* 根据视口宽度自适应字体大小 */
-color: rgba(255, 255, 255, 0.7); /* 半透明 */
-font-family: '汉仪长仿宋体', simsun, Roboto, PingFang;  /* 字体设置 */
-font-weight: bold;
-pointer-events: none; /* 防止水印阻碍交互 */
+  margin-top: auto;
+  align-self: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  pointer-events: none;
 }
 
-/* 响应式设计 */
-@media (max-width: 600px) {
-.container {
-  max-width: 100%;
-  padding: 10px;
-}
-canvas {
-  max-width: 100%;
-}
-.button-row {
-  align-items: right; /* 按钮居右 */
-}
+@media (max-width: 560px) {
+  body {
+    display: block;
+  }
+
+  .container {
+    width: 100%;
+    min-height: 100svh;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .input-box {
+    height: 38px;
+    padding: 6px 8px;
+  }
+
+  .message {
+    min-height: 58px;
+  }
+
+  .button-row {
+    gap: 8px;
+  }
+
+  .left-button,
+  .right-buttons {
+    gap: 7px;
+  }
+
+  .button-row button {
+    min-height: 38px;
+    padding: 7px 9px;
+  }
 }
 
-/* 引入字体 */
-@font-face {
-  font-family: '汉仪瘦金书简';  /* 字体名称 */
-  src: url('fonts/汉仪瘦金书简.ttf') format('truetype');  /* 字体文件路径 */
-}
+@media (max-width: 390px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 
-@font-face {
-  font-family: '汉仪长仿宋体';  /* 字体名称 */
-  src: url('fonts/汉仪长仿宋体.ttf') format('truetype');  /* 字体文件路径 */
+  .button-row {
+    flex-wrap: wrap;
+  }
+
+  .left-button,
+  .right-buttons {
+    flex: 1 1 100%;
+  }
+
+  .button-row button {
+    flex: 1;
+  }
 }

@@ -1,94 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>E ·Postcard</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="images/Yeah.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>E 路Postcard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="images/Yeah.ico" type="image/x-icon">
 </head>
 <body>
-  <!-- 页面加载时显示过渡动画 -->
-  <div id="transition-container"></div>
-
   <div class="container">
-    <!-- 标题 -->
-    <h1>E ·Postcard</h1>
-    
-    <!-- 表单部分 -->
+    <h1>E 路Postcard</h1>
+
     <form id="postcard-form">
-    
-      <!-- 第一行：寄信人 & 时间 -->
-      <div class="form-row">
+      <div class="form-grid">
         <div class="form-group">
-          <label for="sender">寄信人:</label>
-          <input type="text" id="sender" class="input-box" placeholder="请输入寄信人" title="请输入寄信人姓名" required>
+          <label for="sender">寄信人</label>
+          <input type="text" id="sender" class="input-box" placeholder="请输入寄信人" autocomplete="name">
         </div>
         <div class="form-group">
-          <label for="time">日期:</label>
-          <input type="text" id="time" class="input-box" placeholder="请输入日期" title="请输入日期" required>
+          <label for="time">日期</label>
+          <input type="text" id="time" class="input-box" placeholder="例如 2026.05.31">
         </div>
-      </div>
-
-      <!-- 第二行：收件人 & 邮政编码 -->
-      <div class="form-row">
         <div class="form-group">
-          <label for="receiver">收信人:</label>
-          <input type="text" id="receiver" class="input-box" placeholder="请输入收信人" title="请输入收信人姓名" required>
-         </div>
+          <label for="receiver">收信人</label>
+          <input type="text" id="receiver" class="input-box" placeholder="请输入收信人">
+        </div>
         <div class="form-group">
-          <label for="stampcode">邮政编码:</label>
-          <input type="text" id="stampcode" class="input-box" placeholder="请输入6位数字" title="请输入邮政编码" required>
+          <label for="stampcode">邮政编码</label>
+          <input type="text" id="stampcode" class="input-box" placeholder="6 位数字" inputmode="numeric" maxlength="6">
         </div>
       </div>
 
-      <!-- 第三行：留言 -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="message">留言:</label>
-          <textarea id="message" class="input-box message" placeholder="请输入留言[限50字]" title="请输入明信片留言" required></textarea>
+      <div class="form-group message-group">
+        <label for="message">留言</label>
+        <textarea id="message" class="input-box message" placeholder="请输入明信片留言，最多 50 字" maxlength="50"></textarea>
+      </div>
+
+      <div id="canvasContainer">
+        <div class="canvas-container">
+          <canvas id="imageCanvas" class="layer"></canvas>
+          <canvas id="textCanvas" class="layer"></canvas>
+          <canvas id="drawingCanvas" class="layer"></canvas>
         </div>
       </div>
 
-      <!-- 第四行：图片生成 -->
-      <div class="form-row">
-        <div id="canvasContainer">
-          <div class="canvas-container">
-            <canvas id="postcardCanvas"></canvas>
-            <!-- 文字层 -->
-            <canvas id="textCanvas" class="layer"></canvas>
-            <!-- 图片层 -->
-            <canvas id="imageCanvas" class="layer"></canvas>
-            <!-- 涂鸦层 -->
-            <canvas id="drawingCanvas" class="layer"></canvas>
-            <!-- 合成层 -->
-            <canvas id="finalCanvas" class="layer" hidden></canvas>
-          </div>
-        </div>
-      </div>
-      
-      <!-- 第五行：按钮布局 -->
-      <div class="form-row button-row">
-        <!-- 左侧按钮组：插入邮票 & 开启涂鸦 -->
+      <div class="button-row">
         <div class="left-button">
           <button id="insert-image-btn" type="button">邮票</button>
-          <button id="toggle-draw-btn" type="button">涂鸦 </button>
-          <!-- 清除涂鸦按钮 -->
-          <button id="clear-draw-btn" type="button">🗑</button>
+          <button id="toggle-draw-btn" type="button">涂鸦</button>
+          <button id="clear-draw-btn" type="button" hidden>清除</button>
         </div>
-        <!-- 右侧按钮组：保存 & 分享 -->
         <div class="right-buttons">
           <button id="downloadBtn" type="button" disabled>保存</button>
           <button id="share-btn" type="button">分享</button>
         </div>
-        <!-- 隐藏的文件上传 input -->
-          <input type="file" id="image-upload" accept="image/*" class="hidden-input">
-      </div>   
-  </form>
+        <input type="file" id="image-upload" accept="image/*" class="hidden-input">
+      </div>
+    </form>
 
-         <div class="watermark">◣ lili z llli ◢</div>
+    <div class="watermark">lili z llli</div>
+  </div>
 
-<!-- 引入 JS 脚本 -->  
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
