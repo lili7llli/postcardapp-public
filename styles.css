@@ -32,7 +32,7 @@ body {
   flex-direction: column;
   gap: var(--gap);
   position: relative;
-  background: #4b3561 url("images/container-bg.jpg") center / cover no-repeat;
+  background: #4b3561 url("images/container-bg.jpg?v=20260531-mobile") center / cover no-repeat;
 }
 
 h1 {
@@ -107,7 +107,7 @@ label {
   aspect-ratio: 2400 / 3300;
   overflow: hidden;
   border-radius: var(--radius);
-  background: #f4efe7 url("images/canvascontainer-bg.jpg") center / cover no-repeat;
+  background: #f4efe7 url("images/canvascontainer-bg.jpg?v=20260531-mobile") center / cover no-repeat;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
   touch-action: pan-y;
 }

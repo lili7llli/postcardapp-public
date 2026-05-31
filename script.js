@@ -18,7 +18,7 @@ const downloadBtn = document.getElementById("downloadBtn");
 const shareBtn = document.getElementById("share-btn");
 
 const backgroundImage = new Image();
-backgroundImage.src = "images/canvascontainer-bg.jpg";
+backgroundImage.src = "images/canvascontainer-bg.jpg?v=20260531-mobile";
 
 let dpr = Math.min(window.devicePixelRatio || 1, 2);
 let stampImage = null;
